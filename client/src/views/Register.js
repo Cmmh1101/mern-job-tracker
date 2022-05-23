@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Logo, FormRow, Alert } from "../components";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { useAppContext } from "../context/appContext";
@@ -14,7 +14,7 @@ const Register = () => {
   const [values, setValues] = useState(initialState);
   // global state & useNavigate
 
-  const { isLoading, showAlert, displayAlert } = useAppContext();
+  const { isLoading, showAlert, displayAlert, registerUser } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -31,7 +31,12 @@ const Register = () => {
       displayAlert();
       return;
     }
-    console.log(values);
+    const currentUser = { name, email, password };
+    if (isMember) {
+      console.log("already a member");
+    } else {
+      registerUser(currentUser);
+    }
   };
 
   return (
@@ -40,7 +45,7 @@ const Register = () => {
         <Logo />
         <h3>{values.isMember ? "Login" : "Register"}</h3>
         {showAlert && (
-          <Alert alerType="alert-danger" alertText="alert goes here" />
+          <Alert alertType="alert-danger" alertText="alert goes here" />
         )}
 
         {/* name input */}
@@ -68,7 +73,7 @@ const Register = () => {
           handleChange={handleChange}
         />
 
-        <button type="submit" className="btn btn-block">
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
           submit
         </button>
         <p>
