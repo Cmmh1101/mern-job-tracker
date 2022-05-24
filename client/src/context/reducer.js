@@ -51,7 +51,7 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: "danger",
-      alertText: "action.payload.msg",
+      alertText: action.payload.msg,
     };
   }
   if (action.type === LOGIN_USER_BEGIN) {
@@ -61,14 +61,14 @@ const reducer = (state, action) => {
   if (action.type === LOGIN_USER_SUCCESS) {
     return {
       ...state,
+      isLoading: false,
       user: action.payload.user,
       token: action.payload.token,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
-      isLoading: false,
       showAlert: true,
       alertType: "success",
-      alertText: "User Created! Redirecting...",
+      alertText: "Login successful! Redirecting...",
     };
   }
 
@@ -78,7 +78,7 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: "danger",
-      alertText: "action.payload.msg",
+      alertText: action.payload.msg,
     };
   }
   throw new Error(`no such action : ${action.type}`);
