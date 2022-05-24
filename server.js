@@ -7,6 +7,10 @@ dotenv.config();
 // async error
 import "express-async-errors";
 
+// morgan
+
+import morgan from "morgan";
+
 //  db and authenticate user
 import connectDB from "./db/connect.js";
 
@@ -18,6 +22,9 @@ import jobsRouter from "./routes/jobsRoutes.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
 app.use(express.json());
 console.log("hello");
 console.log("hello");
