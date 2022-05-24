@@ -19,6 +19,7 @@ const initialState = {
   showAlert: false,
   alertText: "",
   alertType: "",
+  jobLocation: "",
 };
 
 const AppContext = createContext();
