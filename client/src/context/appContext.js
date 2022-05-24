@@ -56,9 +56,15 @@ const AppProvider = ({ children }) => {
           location,
         },
       });
+      // local storage later
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+      dispatch({
+        type: REGISTER_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
+    clearAlert();
   };
 
   return (

@@ -25,6 +25,10 @@ const reducer = (state, action) => {
   }
 
   if (action.type === REGISTER_USER_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === REGISTER_USER_SUCCESS) {
     return {
       ...state,
       user: action.payload.user,
@@ -38,7 +42,7 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === REGISTER_USER_BEGIN) {
+  if (action.type === REGISTER_USER_ERROR) {
     return {
       ...state,
       isLoading: false,
