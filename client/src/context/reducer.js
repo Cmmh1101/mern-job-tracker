@@ -69,8 +69,8 @@ const reducer = (state, action) => {
       ...initialState,
       user: null,
       token: null,
-      userLocation: null,
-      jobLocation: null,
+      userLocation: "",
+      jobLocation: "",
     };
   }
 
