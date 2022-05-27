@@ -130,6 +130,7 @@ const AppProvider = ({ children }) => {
   const updateUser = async (currentUser) => {
     try {
       const data = await authFetch.patch("/auth/updateUser", currentUser);
+      console.log(data);
     } catch (error) {
       console.log(error.response);
     }
