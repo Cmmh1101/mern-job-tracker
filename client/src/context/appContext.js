@@ -34,6 +34,14 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  //  axios
+  const authFetch = axios.create({
+    baseURL: "/api/v1",
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
+  });
+
   const displayAlert = () => {
     dispatch({
       type: DISPLAY_ALERT,
@@ -98,11 +106,7 @@ const AppProvider = ({ children }) => {
 
   const updateUser = async (currentUser) => {
     try {
-      const data = await axios.patch("/api/v1/auth/updateUser", currentUser, {
-        headers: {
-          Authorization: `Bearer ${state.token}`,
-        },
-      });
+      const data = await authFetch.patch("/auth/updateUser", currentUser);
     } catch (error) {
       console.log(error);
     }
