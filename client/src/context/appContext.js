@@ -96,9 +96,28 @@ const AppProvider = ({ children }) => {
     removeUserFromLocalStorage();
   };
 
+  const updateUser = async (currentUser) => {
+    try {
+      const data = await axios.patch("/api/v1/auth/updateUser", currentUser, {
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, setupUser, toggleSidebar, logoutUser }}
+      value={{
+        ...state,
+        displayAlert,
+        setupUser,
+        toggleSidebar,
+        logoutUser,
+        updateUser,
+      }}
     >
       {children}
     </AppContext.Provider>
