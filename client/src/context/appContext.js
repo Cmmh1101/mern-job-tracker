@@ -37,10 +37,33 @@ const AppProvider = ({ children }) => {
   //  axios
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    headers: {
-      Authorization: `Bearer ${state.token}`,
-    },
   });
+
+  // request
+
+  authFetch.interceptors.request.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  // response
+
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      console.log(error.response);
+      if (error.response.status === 401) {
+        console.log("AUTH ERROR");
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const displayAlert = () => {
     dispatch({
@@ -108,7 +131,7 @@ const AppProvider = ({ children }) => {
     try {
       const data = await authFetch.patch("/auth/updateUser", currentUser);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
