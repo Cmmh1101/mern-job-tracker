@@ -1,9 +1,10 @@
-import { FormRow, Alert } from "../../components";
+import { FormRow, FormRowSelect, Alert } from "../../components";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 
 const AddJob = () => {
   const {
+    isLoading,
     showAlert,
     displayAlert,
     position,
@@ -14,13 +15,16 @@ const AddJob = () => {
     status,
     statusOptions,
     isEditing,
+    handleChange,
+    clearValues,
+    createJob,
   } = useAppContext();
 
   const handleJobInput = (e) => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    console.log(`${name}: ${value}`);
+    handleChange({ name, value });
   };
 
   const handleSubmit = (e) => {
@@ -30,8 +34,11 @@ const AddJob = () => {
       displayAlert();
       return;
     }
-
-    console.log("create job");
+    if (isEditing) {
+      // eventually editJob()
+      return;
+    }
+    createJob();
   };
 
   return (
@@ -62,36 +69,44 @@ const AddJob = () => {
             value={jobLocation}
             handleChange={handleJobInput}
           />
+          {/* job status */}
+          <FormRowSelect
+            name="status"
+            value={status}
+            handleChange={handleJobInput}
+            list={statusOptions}
+          />
           {/* job type*/}
-          <div className="form-row">
-            <label htmlFor="jobType" className="form-label">
-              Job Type
-            </label>
-            <select
-              name="jobType"
-              value={jobType}
-              onChange={handleJobInput}
-              className="form-select"
-            >
-              {jobTypeOptions.map((itemValue, index) => {
-                return (
-                  <option key={index} value={itemValue}>
-                    {itemValue}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          {/* job type*/}
+          <FormRowSelect
+            labelText="job type"
+            name="jobType"
+            value={jobType}
+            handleChange={handleJobInput}
+            list={jobTypeOptions}
+          />
+          {/* submit btn */}
           <div className="btn-container">
             <button
               type="submit"
               className="btn btn-block submit-btn"
               onClick={handleSubmit}
+              disabled={isLoading}
             >
               Submit
             </button>
+            {/* clear btn */}
+            <button
+              type="submit"
+              className="btn btn-block clear-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                clearValues();
+              }}
+            >
+              Clear
+            </button>
           </div>
+          {/* clear btn */}
         </div>
       </form>
     </Wrapper>
