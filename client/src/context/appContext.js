@@ -28,8 +28,16 @@ const initialState = {
   showAlert: false,
   alertText: "",
   alertType: "",
-  jobLocation: userLocation || "",
   showSidebar: false,
+  isEditing: false,
+  editJobId: "",
+  position: "",
+  company: "",
+  jobLocation: userLocation || "",
+  jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
+  jobType: "full-time",
+  jobStatusOption: ["interview", "declined", "pending"],
+  status: "pending",
 };
 
 const AppContext = createContext();
