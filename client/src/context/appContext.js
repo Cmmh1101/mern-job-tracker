@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, createContext } from "react";
+import React, { useReducer, useContext, createContext, useEffect } from "react";
 import axios from "axios";
 
 import reducer from "./reducer";
@@ -19,6 +19,8 @@ import {
   CREATE_JOB_SUCCESS,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -199,6 +201,31 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
+  const getJobs = async () => {
+    let url = `/jobs`;
+
+    dispatch({ type: GET_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { jobs, totalJobs, numOfPages } = data;
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: {
+          jobs,
+          totalJobs,
+          numOfPages,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+  };
+
+  useEffect(() => {
+    getJobs();
+  }, []);
 
   return (
     <AppContext.Provider
