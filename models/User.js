@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxLength: 20,
     trim: true,
-    default: "my city",
+    default: "Usa",
   },
 });
 
