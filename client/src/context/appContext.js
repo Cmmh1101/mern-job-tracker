@@ -254,6 +254,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
+    clearAlert();
   };
 
   const deleteJob = async (jobId) => {
