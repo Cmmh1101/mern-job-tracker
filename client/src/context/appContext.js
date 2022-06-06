@@ -186,7 +186,10 @@ const AppProvider = ({ children }) => {
   };
 
   const handleChange = ({ name, value }) => {
-    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+    dispatch({
+      type: HANDLE_CHANGE,
+      payload: { name, value },
+    });
   };
 
   const clearValues = () => {
