@@ -58,6 +58,11 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
+  search: "",
+  searchStatus: "all",
+  searchType: "all",
+  sort: "latest",
+  options: ["latest", "oldest", "a-z", "z-a"],
 };
 
 const AppContext = createContext();
@@ -295,6 +300,10 @@ const AppProvider = ({ children }) => {
     getJobs();
   }, []);
 
+  const clearFilters = () => {
+    console.log("clear filters");
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -312,6 +321,7 @@ const AppProvider = ({ children }) => {
         deleteJob,
         editJob,
         showStats,
+        clearFilters,
       }}
     >
       {children}
