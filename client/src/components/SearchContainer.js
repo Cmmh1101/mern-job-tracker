@@ -1,33 +1,35 @@
-import React from "react";
+import { useEffect } from "react";
 import { FormRow, FormRowSelect } from ".";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/SearchContainer";
 
 const SearchContainer = () => {
   const {
+    getJobs,
     isLoading,
     search,
+    handleChange,
     searchStatus,
-    searchType,
-    sort,
-    sortOptions,
     statusOptions,
     jobTypeOptions,
-    handleChange,
+    searchType,
     clearFilters,
+    sort,
+    sortOptions,
   } = useAppContext();
 
   const handleSearch = (e) => {
     if (isLoading) return;
     handleChange({ name: e.target.name, value: e.target.value });
-    console.log(e.target.name, "name");
-    console.log(e.target.value, "value");
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     clearFilters();
   };
+
+  useEffect(() => {
+    getJobs();
+  }, [search, searchStatus, searchType, sort]);
 
   return (
     <Wrapper>
@@ -40,7 +42,7 @@ const SearchContainer = () => {
             name="search"
             value={search}
             handleChange={handleSearch}
-          />
+          ></FormRow>
           {/* search by status */}
           <FormRowSelect
             labelText="job status"
@@ -48,28 +50,30 @@ const SearchContainer = () => {
             value={searchStatus}
             handleChange={handleSearch}
             list={["all", ...statusOptions]}
-          />
+          ></FormRowSelect>
           {/* search by type */}
+
           <FormRowSelect
             labelText="job type"
             name="searchType"
             value={searchType}
             handleChange={handleSearch}
             list={["all", ...jobTypeOptions]}
-          />
+          ></FormRowSelect>
           {/* sort */}
+
           <FormRowSelect
             name="sort"
             value={sort}
             handleChange={handleSearch}
             list={sortOptions}
-          />
+          ></FormRowSelect>
           <button
             className="btn btn-block btn-danger"
             disabled={isLoading}
             onClick={handleSubmit}
           >
-            Clear Filters
+            clear filters
           </button>
         </div>
       </form>
