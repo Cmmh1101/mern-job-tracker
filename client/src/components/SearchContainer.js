@@ -16,6 +16,7 @@ const SearchContainer = () => {
     clearFilters,
     sort,
     sortOptions,
+    page,
   } = useAppContext();
 
   const handleSearch = (e) => {
@@ -29,7 +30,7 @@ const SearchContainer = () => {
 
   useEffect(() => {
     getJobs();
-  }, [search, searchStatus, searchType, sort]);
+  }, [page, search, searchStatus, searchType, sort]);
 
   return (
     <Wrapper>
