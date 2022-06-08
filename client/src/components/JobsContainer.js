@@ -7,11 +7,11 @@ import Wrapper from "../assets/wrappers/JobsContainer";
 import PageBtnContainer from "./PageBtnContainer";
 
 const JobsContainer = () => {
-  const { getJobs, jobs, isLoading, page, totalJobs, numOfPages } =
-    useAppContext();
+  const { getJobs, jobs, isLoading, totalJobs, numOfPages } = useAppContext();
 
   useEffect(() => {
     getJobs();
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {

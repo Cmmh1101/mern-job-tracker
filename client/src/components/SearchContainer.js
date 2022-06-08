@@ -30,6 +30,7 @@ const SearchContainer = () => {
 
   useEffect(() => {
     getJobs();
+    // eslint-disable-next-line
   }, [page, search, searchStatus, searchType, sort]);
 
   return (
